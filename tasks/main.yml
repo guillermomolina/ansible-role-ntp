@@ -19,24 +19,25 @@
 - name: Set timezone
   timezone:
     name: "{{ ntp_timezone }}"
+  when: ansible_system == "Linux"
 
 - name: Ensure NTP is running and enabled as configured.
   service:
     name: "{{ ntp_daemon }}"
     state: started
-    enabled: true
+    enabled: yes
   when: ntp_enabled
 
 - name: Ensure NTP is stopped and disabled as configured.
   service:
     name: "{{ ntp_daemon }}"
     state: stopped
-    enabled: false
+    enabled: no
   when: not ntp_enabled
 
 - name: Generate ntp.conf file
   template:
     src: ntp.conf.j2
-    dest: /etc/ntp.conf
+    dest: "/etc/inet/ntp.conf"
   notify: restart ntp
   when: ntp_manage_config

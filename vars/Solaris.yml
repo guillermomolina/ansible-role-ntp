@@ -1,0 +1,4 @@
+---
+ntp_daemon: ntp
+ntp_driftfile: /var/ntp/ntp.drift
+ntp_conffile: /etc/inet/ntp.conf
